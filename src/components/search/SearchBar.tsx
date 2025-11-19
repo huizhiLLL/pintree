@@ -94,17 +94,17 @@ const SearchEngineIcon = ({ engine }: { engine: string }) => {
 export function SearchBar({ 
   placeholder = "Search bookmarks...", 
   onSearch, 
-  currentEngine = "Bookmarks", 
+  currentEngine = "Web Search", 
   onEngineChange, 
   currentCollection = 'all', 
   onCollectionChange 
 }: SearchBarProps) {
-  const engines = ["Bookmarks", "Web Search", "AI Search"];
+  const engines = ["Web Search", "Bookmarks", "AI Search"];
   const [inputValue, setInputValue] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const editorRef = useRef<HTMLDivElement>(null);
   const [isSearching, setIsSearching] = useState(false);
-  const [currentSearchEngine, setCurrentSearchEngine] = useState("Google");
+  const [currentSearchEngine, setCurrentSearchEngine] = useState("Bing");
   const [currentAIEngine, setCurrentAIEngine] = useState("ChatGPT");
 
   const aiSearchEngines: { [key: string]: string } = {
@@ -316,7 +316,7 @@ export function SearchBar({
 
                 {currentEngine === "Web Search" && (
                   <div className="flex items-center gap-2">
-                    {['Google', 'Bing', 'Yandex', 'Baidu'].map((engine) => (
+                    {['Bing','Google',  'Yandex', 'Baidu'].map((engine) => (
                       <button 
                         key={engine}
                         className={`

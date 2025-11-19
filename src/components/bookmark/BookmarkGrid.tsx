@@ -99,7 +99,7 @@ export function BookmarkGrid({
   const [totalPages, setTotalPages] = useState(1);
   const [inputValue, setInputValue] = useState("");
   const [totalResults, setTotalResults] = useState(0);
-  const [currentEngine, setCurrentEngine] = useState("Bookmarks");
+  const [currentEngine, setCurrentEngine] = useState("Web Search");
   const [enableSearch, setEnableSearch] = useState(true);
 
   const routeToFolderInCollection = (collectionSlug: string, folderId?: string) => {
@@ -403,7 +403,11 @@ export function BookmarkGrid({
 
               {/* 子文件夹及其内容 */}
               {subfolders?.map((subfolder) => (
-                <div key={subfolder.id} className="space-y-4">
+                <div
+                  key={subfolder.id}
+                  id={`folder-section-${subfolder.id}`}
+                  className="space-y-4 scroll-mt-24"
+                >
                   <div className="flex items-center justify-between">
                     <h3 className="text-lg font-semibold">
                       {subfolder.name}

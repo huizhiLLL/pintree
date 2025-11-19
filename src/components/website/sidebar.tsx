@@ -55,6 +55,7 @@ export function WebsiteSidebar({
   );
   const [folders, setFolders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [activeFolderId, setActiveFolderId] = useState<string | null>(null);
 
   const { images, isLoading, error } = useSettingImages("logoUrl");
 
@@ -110,6 +111,10 @@ export function WebsiteSidebar({
       fetchFolders();
     }
   }, [selectedCollectionId]);
+
+  useEffect(() => {
+    setActiveFolderId(currentFolderId);
+  }, [currentFolderId]);
 
   // 添加一个新的 useEffect 来处理文件夹展开
   useEffect(() => {
@@ -236,6 +241,16 @@ export function WebsiteSidebar({
     });
   };
 
+  const scrollToFolderSection = (folderId: string) => {
+    if (typeof document === "undefined") return false;
+    const target = document.getElementById(`folder-section-${folderId}`);
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      return true;
+    }
+    return false;
+  };
+
   const renderFolderTree = (folders: FolderNode[]) => {
     return folders.map((folder) => (
       <div key={folder.id}>
@@ -245,7 +260,9 @@ export function WebsiteSidebar({
             className={cn(
               "flex items-center w-full",
               "transition-colors hover:bg-gray-200/50 active:bg-gray-200/50 rounded-xl",
-              currentFolderId === folder.id ? "bg-gray-200/50" : ""
+              (activeFolderId ?? currentFolderId) === folder.id
+                ? "bg-gray-200/50"
+                : ""
             )}
             style={{
               paddingLeft: `${folder.level * 5 + 12}px`,
@@ -258,7 +275,7 @@ export function WebsiteSidebar({
                     className={cn(
                       "h-4 w-4 shrink-0 transition-transform",
                       expandedFolders.has(folder.id) && "rotate-90",
-                      currentFolderId === folder.id &&
+                      (activeFolderId ?? currentFolderId) === folder.id &&
                         "text-emerald-600 dark:text-emerald-400"
                     )}
                     onClick={(e) => toggleFolder(folder.id, e)}
@@ -270,7 +287,7 @@ export function WebsiteSidebar({
                   <FolderOpen
                     className={cn(
                       "h-4 w-4 shrink-0 fill-current",
-                      currentFolderId === folder.id &&
+                      (activeFolderId ?? currentFolderId) === folder.id &&
                         "text-emerald-600 dark:text-emerald-400"
                     )}
                   />
@@ -278,7 +295,7 @@ export function WebsiteSidebar({
                   <Folder
                     className={cn(
                       "h-4 w-4 shrink-0 fill-current",
-                      currentFolderId === folder.id &&
+                      (activeFolderId ?? currentFolderId) === folder.id &&
                         "text-emerald-600 dark:text-emerald-400"
                     )}
                   />
@@ -287,7 +304,7 @@ export function WebsiteSidebar({
               <span
                 className={cn(
                   "truncate",
-                  currentFolderId === folder.id &&
+                  (activeFolderId ?? currentFolderId) === folder.id &&
                     "text-emerald-600 dark:text-emerald-400 font-medium"
                 )}
               >
@@ -305,6 +322,12 @@ export function WebsiteSidebar({
   };
 
   const handleFolderSelect = (folderId: string) => {
+    const scrolled = scrollToFolderSection(folderId);
+    if (scrolled) {
+      setActiveFolderId(folderId);
+      return;
+    }
+
     // 如果文件夹有子文件夹，则展开/折叠该文件夹
     const folder = folders.find((f) => f.id === folderId);
     if (folder) {
