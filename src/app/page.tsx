@@ -101,7 +101,7 @@ function SearchParamsComponent() {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <div className="flex flex-1">
-        <SidebarProvider>
+        <SidebarProvider defaultOpen={false}>
           {
           isLoading && !collections.length ? (
             <div className="flex flex-1 items-center justify-center">

@@ -2,7 +2,7 @@ export interface SettingItem {
   key: string;
   value: string;
   type: 'string' | 'number' | 'boolean' | 'json';
-  group: 'basic' | 'seo' | 'feature' | 'analytics';
+  group: 'basic' | 'seo' | 'feature';
   description?: string;
 }
 
@@ -86,15 +86,6 @@ export const defaultSettings: SettingItem[] = [
     type: "string",
     group: "feature",
     description: "CTA按钮样式"
-  },
-
-  // 统计分析
-  {
-    key: "clarityId",
-    value: "",
-    type: "string",
-    group: "analytics",
-    description: "Microsoft Clarity ID"
   },
 ];
 

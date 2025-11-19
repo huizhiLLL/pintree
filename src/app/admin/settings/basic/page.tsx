@@ -37,7 +37,7 @@ import { revalidateData } from "@/actions/revalidate-data";
 
 export default function BasicSettingsPage() {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<"basicInfo" |"statistics" | "footerSettings">("basicInfo");
+  const [activeTab, setActiveTab] = useState<"basicInfo" | "footerSettings">("basicInfo");
   const [loading, setLoading] = useState(false);
   const [settings, setSettings] = useState({
     websiteName: "",
@@ -111,11 +111,6 @@ export default function BasicSettingsPage() {
           case "basicInfo":
             return {
               websiteName: settings.websiteName,
-            };
-          case "statistics":
-            return {
-              googleAnalyticsId: settings.googleAnalyticsId,
-              clarityId: settings.clarityId
             };
           case "footerSettings":
             return {
@@ -196,9 +191,8 @@ export default function BasicSettingsPage() {
             onValueChange={(value) => setActiveTab(value as typeof activeTab)}
             className="w-full"
           >
-            <TabsList className="grid w-full grid-cols-3 mb-6">
+            <TabsList className="grid w-full grid-cols-2 mb-6">
               <TabsTrigger value="basicInfo">Basic Info</TabsTrigger>
-              <TabsTrigger value="statistics">Statistics</TabsTrigger>
               <TabsTrigger value="footerSettings">Footer</TabsTrigger>
             </TabsList>
 
@@ -238,44 +232,6 @@ export default function BasicSettingsPage() {
               </div>
             </TabsContent>
 
-            <TabsContent value="statistics">
-              <div className="space-y-4">
-                <p className="text-sm text-muted-foreground font-normal">
-                  Statistics Code
-                </p>
-                <Card className="border bg-white">
-                  <CardHeader className="border-b">
-                    <CardTitle>Statistics Code</CardTitle>
-                    <CardDescription>Set the statistics code of your website</CardDescription>
-                  </CardHeader>
-                  <CardContent className="grid gap-4 p-6">
-                    <div className="grid gap-2">
-                      <Label htmlFor="googleAnalyticsId">
-                        Google Analytics ID
-                      </Label>
-                      <Input
-                        id="googleAnalyticsId"
-                        name="googleAnalyticsId"
-                        value={settings.googleAnalyticsId}
-                        onChange={handleChange}
-                        placeholder="G-XXXXXXXXXX"
-                      />
-                    </div>
-
-                    <div className="grid gap-2">
-                      <Label htmlFor="clarityId">Microsoft Clarity ID</Label>
-                      <Input
-                        id="clarityId"
-                        name="clarityId"
-                        value={settings.clarityId}
-                        onChange={handleChange}
-                        placeholder="XXXXXXXXXX"
-                      />
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </TabsContent>
 
             <TabsContent value="footerSettings">
               <div className="space-y-4">

@@ -63,7 +63,7 @@ export async function updateSettingsWithDefaults() {
             });
 
             if (!existingSettingImage) {
-              const imagesToProcess = imageData.images || [imageData.image];
+              const imagesToProcess = [imageData.image];
 
               await Promise.all(
                 imagesToProcess.map(async (imagePath) => {

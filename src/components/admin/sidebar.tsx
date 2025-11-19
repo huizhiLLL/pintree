@@ -53,10 +53,6 @@ const menuItems = [
         href: "/admin/settings/basic",
         label: "Basic Settings",
       },
-      {
-        href: "/admin/settings/seo",
-        label: "SEO Settings",
-      },
     ]
   },
 ];
